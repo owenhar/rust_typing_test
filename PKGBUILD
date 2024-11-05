@@ -1,7 +1,7 @@
 # Maintainer: Owen Harris <eowenh0410@gmail.com>
 
 pkgname="typing_test"
-pkgver="1.0.2"
+pkgver="1.0.3"
 pkgrel=1
 pkgdesc='Simple typing test for terminal'
 url='https://github.com/owenhar/rust_typing_test'

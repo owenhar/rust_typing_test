@@ -84,8 +84,8 @@ fn print_line(test : &str, input: &String, overwrite_line: bool) {
 
 fn accuracy(test: &String, input : &String) -> f64 {
     let mut accuracte = 0;
-    for c in test.chars().enumerate() {
-        if c.1 == input.chars().nth(c.0).unwrap() {
+    for c in input.chars().enumerate() {
+        if c.1 == test.chars().nth(c.0).unwrap() {
             accuracte += 1;
         }
     }
