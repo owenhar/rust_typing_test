@@ -1,29 +1,32 @@
 use core::f64;
 use std::time::SystemTime;
-use std::{io::Write, thread, time};
+use std::io::Write;
 use inline_colorization::*;
+use word_gen::words::get_words;
 use std::io::{self, Read};
 use termion::raw::IntoRawMode;
 use termion::cursor;
 
+mod word_gen;
 
 fn main() {
-    let testMessage: String = String::from("goat jump cheese eight ball nine ten");
+    // let testMessage: String = String::from("goat jump cheese eight ball nine ten");
+    let test_message: String = get_words(20);
     let mut input: String = String::new();    
     let stdin = io::stdin();
     let mut stdout = io::stdout().into_raw_mode().unwrap();
-    let mut stdin = stdin.lock();
+    let stdin = stdin.lock();
 
     let mut start = SystemTime::now();
-    let mut hasTyped = false;
+    let mut has_typed = false;
 
     write!(stdout, "{}", cursor::Hide).unwrap();
-    printLine(&testMessage, &input, false);
+    print_line(&test_message, &input, false);
     let _ = stdout.flush();
     for c in stdin.bytes() {
         let c = c.unwrap();
-        if !hasTyped {
-            hasTyped = true;
+        if !has_typed {
+            has_typed = true;
             start = SystemTime::now()
         }
         if c == 8 || c == 127 {
@@ -35,10 +38,10 @@ fn main() {
         } else {
             input.push(c as char);
         }
-        printLine(&testMessage, &input, true);
+        print_line(&test_message, &input, true);
         let _ = stdout.flush();
 
-        if testMessage.len() == input.len() {
+        if test_message.len() == input.len() {
             break;
         }
     }
@@ -49,12 +52,12 @@ fn main() {
     println!("");
     println!("Time Elasped: {:.2}", start.elapsed().unwrap().as_secs_f64());
     println!("WPM: {:.2}", (input.len() as f64 / 5.0) / start.elapsed().unwrap().as_secs_f64() * 60.0);
-    println!("Accuracy: {:.2}%", accuracy(&testMessage, &input) * 100.0);
+    println!("Accuracy: {:.2}%", accuracy(&test_message, &input) * 100.0);
 }
 
 
-fn printLine(test : &str, input: &String, overwriteLine: bool) {
-    if overwriteLine {
+fn print_line(test : &str, input: &String, overwrite_line: bool) {
+    if overwrite_line {
         print!("\r");
     }
 
@@ -66,8 +69,8 @@ fn printLine(test : &str, input: &String, overwriteLine: bool) {
             print!("{}", c.1);
             continue;
         }
-        let inChar : char = input.chars().nth(c.0).unwrap();
-        if inChar == c.1 {
+        let in_char : char = input.chars().nth(c.0).unwrap();
+        if in_char == c.1 {
             print!("{color_blue}{}{color_reset}", c.1);
         } else {
             print!{"{color_red}{}{color_reset}", c.1};
