@@ -2,7 +2,11 @@ use std::fs;
 
 use rand::Rng;
 
-const PATH : &str = "/etc/words.txt";
+#[cfg(debug_assertions)]
+const PATH: &str = "./words.txt";
+
+#[cfg(not(debug_assertions))]
+const PATH: &str = "/etc/words.txt";
 
 pub fn get_words(number: u32) -> String {
     let mut result = String::new();
@@ -20,6 +24,7 @@ pub fn get_words(number: u32) -> String {
 
     return result;
 }
+
 
 fn get_words_from_file() -> Vec<String> {
     let words = fs::read_to_string(PATH).expect("No words found");
