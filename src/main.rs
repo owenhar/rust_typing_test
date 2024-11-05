@@ -11,18 +11,22 @@ mod word_gen;
 
 fn main() {
     // let testMessage: String = String::from("goat jump cheese eight ball nine ten");
-    let test_message: String = get_words(20);
+    let test_message: String = get_words(5);
     let mut input: String = String::new();    
+    
+    // Sets terminal to raw_mode to stop buffering 
     let stdin = io::stdin();
     let mut stdout = io::stdout().into_raw_mode().unwrap();
     let stdin = stdin.lock();
 
+    // Gets time
     let mut start = SystemTime::now();
     let mut has_typed = false;
 
-    write!(stdout, "{}", cursor::Hide).unwrap();
-    print_line(&test_message, &input, false);
-    let _ = stdout.flush();
+    write!(stdout, "{}", cursor::Hide).unwrap(); // Hide the cursor
+    print_line(&test_message, &input, false); // Print the text initially
+    stdout.flush().unwrap();
+
     for c in stdin.bytes() {
         let c = c.unwrap();
         if !has_typed {
@@ -39,16 +43,16 @@ fn main() {
             input.push(c as char);
         }
         print_line(&test_message, &input, true);
-        let _ = stdout.flush();
+        stdout.flush().unwrap();
 
         if test_message.len() == input.len() {
             break;
         }
     }
 
-    write!(stdout, "{}", cursor::Show).unwrap();
-    let _ = stdout.flush();
-    drop(stdout);
+    write!(stdout, "{}", cursor::Show).unwrap(); // Un-hides cursor
+    stdout.flush().unwrap();
+    drop(stdout); // Stops raw mode and re-enables buffering
     println!("");
     println!("Time Elasped: {:.2}", start.elapsed().unwrap().as_secs_f64());
     println!("WPM: {:.2}", (input.len() as f64 / 5.0) / start.elapsed().unwrap().as_secs_f64() * 60.0);

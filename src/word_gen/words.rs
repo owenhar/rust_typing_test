@@ -2,7 +2,7 @@ use std::fs;
 
 use rand::Rng;
 
-const PATH : &str = "./words.txt";
+const PATH : &str = "/etc/words.txt";
 
 pub fn get_words(number: u32) -> String {
     let mut result = String::new();
