@@ -2,3 +2,4 @@ target/
 oldWords.txt
 *.pkg.tar.zst
 pkg/
+.idea/
