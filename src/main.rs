@@ -77,7 +77,11 @@ fn print_line(test : &str, input: &String, overwrite_line: bool) {
         if in_char == c.1 {
             print!("{color_blue}{}{color_reset}", c.1);
         } else {
-            print!("{color_red}{}{color_reset}", c.1);
+            if c.1 == ' ' {
+                print!("{color_red}_{color_reset}");
+            } else {
+                print!("{color_red}{}{color_reset}", c.1);
+            }
         }
     }
 }
