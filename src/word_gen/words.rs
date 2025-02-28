@@ -8,23 +8,24 @@ const PATH: &str = "./words.txt";
 #[cfg(not(debug_assertions))]
 const PATH: &str = "/etc/words.txt";
 
-pub fn get_words(number: u32) -> String {
-    let mut result = String::new();
+pub fn get_words(number: usize) -> Vec<String> {
     let words = get_words_from_file();
 
     let mut rng = rand::thread_rng();
 
+    let mut final_words: Vec<String> = Vec::with_capacity(number as usize);
     for _ in 0..number {
         let rand_num = rng.gen_range(0..words.len());
-        if !result.is_empty() {
-            result.push(' ');
-        }
-        result = result + words.get(rand_num).expect("Failed to index into words")
+        final_words.push(
+            words
+                .get(rand_num)
+                .expect("Failed to index into words")
+                .clone(),
+        );
     }
 
-    return result;
+    return final_words;
 }
-
 
 fn get_words_from_file() -> Vec<String> {
     let words = fs::read_to_string(PATH).expect("No words found");
