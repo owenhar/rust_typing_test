@@ -13,6 +13,8 @@ fn main() {
     // let testMessage: String = String::from("goat jump cheese eight ball nine ten");
     let word_count: usize = 15;
     let words: Vec<String> = get_words(word_count);
+    let total_len: usize = words.iter().map(|w| w.len()).sum();
+    let average: f64 = (total_len as f64) / (word_count as f64);
     let prompt: String = words.join(" ");
     let mut input: String = String::new();
     
@@ -59,6 +61,7 @@ fn main() {
     println!("Time Elasped: {:.2}", start.elapsed().unwrap().as_secs_f64());
     println!("WPM: {:.2}", (input.len() as f64 / 5.0) / start.elapsed().unwrap().as_secs_f64() * 60.0);
     println!("Accuracy: {:.2}%", accuracy(&prompt, &input) * 100.0);
+    println!("Average Length: {:.2} characters per word", average);
 }
 
 
