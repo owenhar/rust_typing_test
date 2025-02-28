@@ -13,7 +13,7 @@ fn main() {
     // let testMessage: String = String::from("goat jump cheese eight ball nine ten");
     let word_count: usize = 15;
     let words: Vec<String> = get_words(word_count);
-    let test_message: String = words.join(" ");
+    let prompt: String = words.join(" ");
     let mut input: String = String::new();
     
     // Sets terminal to raw_mode to stop buffering 
@@ -26,7 +26,7 @@ fn main() {
     let mut has_typed = false;
 
     write!(stdout, "{}", cursor::Hide).unwrap(); // Hide the cursor
-    print_line(&test_message, &input, false); // Print the text initially
+    print_line(&prompt, &input, false); // Print the text initially
     stdout.flush().unwrap();
 
     for c in stdin.bytes() {
@@ -44,10 +44,10 @@ fn main() {
         } else {
             input.push(c as char);
         }
-        print_line(&test_message, &input, true);
+        print_line(&prompt, &input, true);
         stdout.flush().unwrap();
 
-        if test_message.len() == input.len() {
+        if prompt.len() == input.len() {
             break;
         }
     }
@@ -58,7 +58,7 @@ fn main() {
     println!("");
     println!("Time Elasped: {:.2}", start.elapsed().unwrap().as_secs_f64());
     println!("WPM: {:.2}", (input.len() as f64 / 5.0) / start.elapsed().unwrap().as_secs_f64() * 60.0);
-    println!("Accuracy: {:.2}%", accuracy(&test_message, &input) * 100.0);
+    println!("Accuracy: {:.2}%", accuracy(&prompt, &input) * 100.0);
 }
 
 
