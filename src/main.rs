@@ -11,8 +11,10 @@ mod word_gen;
 
 fn main() {
     // let testMessage: String = String::from("goat jump cheese eight ball nine ten");
-    let test_message: String = get_words(15);
-    let mut input: String = String::new();    
+    let word_count: usize = 15;
+    let words: Vec<String> = get_words(word_count);
+    let test_message: String = words.join(" ");
+    let mut input: String = String::new();
     
     // Sets terminal to raw_mode to stop buffering 
     let stdin = io::stdin();
