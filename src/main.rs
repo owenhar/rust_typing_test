@@ -89,6 +89,10 @@ fn print_line(test : &str, input: &String, overwrite_line: bool) {
             }
         }
     }
+
+    if input.len() == test.len() {
+        print!(" ");
+    }
 }
 
 fn accuracy(test: &String, input : &String) -> f64 {
